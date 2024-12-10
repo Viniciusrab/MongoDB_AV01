@@ -68,10 +68,10 @@
 		</dependency>
 
 		<dependency>
-    <groupId>org.mongodb</groupId>
-    <artifactId>mongo-java-driver</artifactId>
-    <version>3.12.14</version>
-</dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>mongodb-driver-sync</artifactId>
+        <version>5.2.1</version>
+    </dependency>
 
 <dependency>
     <groupId>org.springframework.data</groupId>

@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://myAtlasDBUser:36KZw56vv5NjU4Cp@myatlasclusteredu.wtplp.mongodb.net/myDatabaseName?retryWrites=true&w=majority
+  server:
+    port: 8080
