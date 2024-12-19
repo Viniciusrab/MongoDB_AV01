@@ -8,7 +8,6 @@ public class ShoppingDTO {
     private List<String> productIds;
     private double total;
 
-    // Construtores
     public ShoppingDTO() {}
 
     public ShoppingDTO(String id, String userId, List<String> productIds, double total) {

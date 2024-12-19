@@ -6,7 +6,6 @@ public class ProductDTO {
     private String description;
     private double price;
 
-    // Construtores
     public ProductDTO() {}
 
     public ProductDTO(String id, String name, String description, double price) {
