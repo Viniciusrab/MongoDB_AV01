@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.iftm.edu.br.shopping_api.models.Shopping;
 import com.iftm.edu.br.shopping_api.repositories.ShoppingRepository;
 
@@ -34,4 +35,3 @@ public class ShoppingService {
         return shoppingRepository.findByDate(date);
     }
 }
-

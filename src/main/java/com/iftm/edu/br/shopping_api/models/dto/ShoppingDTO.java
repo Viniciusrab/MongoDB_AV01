@@ -17,7 +17,6 @@ public class ShoppingDTO {
         this.total = total;
     }
 
-    // Getters e Setters
     public String getId() {
         return id;
     }

@@ -1,52 +1,58 @@
 package com.iftm.edu.br.product_api.controller;
 
-import com.iftm.edu.br.product_api.models.Product;
-import com.iftm.edu.br.product_api.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.iftm.edu.br.product_api.models.Product;
+import com.iftm.edu.br.product_api.models.dto.ProductDTO;
+import com.iftm.edu.br.product_api.services.ProductService;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/products")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    // Endpoint para salvar um produto
+    // Converte Product para ProductDTO
+    private ProductDTO convertToDTO(Product product) {
+        return new ProductDTO(
+            product.getId(),
+            product.getName(),
+            product.getDescription(),
+            product.getPrice()
+        );
+    }
+
     @PostMapping
-    public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody Product product) {
         Product savedProduct = productService.save(product);
-        return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
+        return ResponseEntity.ok(convertToDTO(savedProduct));
     }
 
-    // Endpoint para buscar todos os produtos
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productService.findAll();
-        return new ResponseEntity<>(products, HttpStatus.OK);
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        List<ProductDTO> productDTOs = productService.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(productDTOs);
     }
 
-    // Endpoint para buscar um produto por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable String id) {
-        Optional<Product> product = productService.findById(id);
-        if (product.isPresent()) {
-            return new ResponseEntity<>(product.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable String id) {
+        return productService.findById(id)
+            .map(product -> ResponseEntity.ok(convertToDTO(product)))
+            .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Endpoint para buscar produtos por categoria
-    @GetMapping("/category/{category}")
-    public ResponseEntity<List<Product>> getProductsByCategory(@PathVariable String category) {
-        List<Product> products = productService.findByCategory(category);
-        return new ResponseEntity<>(products, HttpStatus.OK);
+    @GetMapping("/byCategory/{category}")
+    public ResponseEntity<List<ProductDTO>> getProductsByCategory(@PathVariable String category) {
+        List<ProductDTO> productDTOs = productService.findByCategory(category).stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(productDTOs);
     }
 }
-

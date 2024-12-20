@@ -10,4 +10,3 @@ public interface ShoppingRepository extends MongoRepository<Shopping, String> {
     List<Shopping> findByUserId(String userId);
     List<Shopping> findByDate(String date);
 }
-

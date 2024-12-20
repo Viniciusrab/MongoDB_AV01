@@ -1,13 +1,13 @@
 package com.iftm.edu.br.user_api.services;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iftm.edu.br.user_api.models.User;
 import com.iftm.edu.br.user_api.repositories.UserRepository;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -34,5 +34,8 @@ public class UserService {
     public List<User> findByName(String name) {
         return userRepository.findByNameContaining(name);
     }
-}
 
+    public void deleteById(String id) {
+        userRepository.deleteById(id);
+    }
+}
